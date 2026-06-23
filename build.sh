@@ -64,7 +64,7 @@ if not Project.objects.exists():
 if not Experience.objects.exists():
     Experience.objects.create(
         role='Software Developer',
-        company='Chandigarh Team Computers (CTC), Chandigarh',
+        company='CTC Solutions (Chandigarh Team Computers), Chandigarh',
         duration='Jun 2026 - Present',
         description='Developing enterprise software solutions and custom applications for clients across multiple industries. Working on Full Stack Development using Python, Django, React.js, JavaScript, SQL Server, and REST APIs. Designing and modernizing desktop, web, Android, and iOS applications. Working on AI-powered solutions, LLM applications, Agentic AI integration, and intelligent automation.',
         current=True, order=1
