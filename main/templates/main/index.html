@@ -306,9 +306,9 @@ tailwind.config = {
             <a href="https://www.linkedin.com/in/vishalyadavdev/" target="_blank" class="flex-1 glass-v py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs text-gray-300 hover:text-white transition-colors"><i class="fab fa-linkedin-in text-blue-400"></i> LinkedIn</a>
           </div>
           {% if profile and profile.resume %}
-          <a href="{{ profile.resume.url }}" download class="btn-grad w-full py-3 rounded-xl flex items-center justify-center gap-2 text-white font-semibold text-sm"><span>Download Resume</span><i class="fas fa-download"></i></a>
+          <a href="{{ profile.resume.url }}" download="Vishal_Yadav_Resume.pdf" class="btn-grad w-full py-3 rounded-xl flex items-center justify-center gap-2 text-white font-semibold text-sm"><span>Download Resume</span><i class="fas fa-download"></i></a>
           {% else %}
-          <a href="#" class="btn-grad w-full py-3 rounded-xl flex items-center justify-center gap-2 text-white font-semibold text-sm"><span>Download Resume</span><i class="fas fa-download"></i></a>
+          <a href="{% static 'main/images/vishal_resume.pdf' %}" download="Vishal_Yadav_Resume.pdf" class="btn-grad w-full py-3 rounded-xl flex items-center justify-center gap-2 text-white font-semibold text-sm"><span>Download Resume</span><i class="fas fa-download"></i></a>
           {% endif %}
         </div>
       </div>
