@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.utils import timezone
 from .models import Profile, Skill, Project, Experience, Education, Contact
 import threading
+import os
+import resend
+
+resend.api_key = os.environ.get('RESEND_API_KEY', '')
 
 
 def send_contact_email(name, email, subject, message):
-    import os
-    print(f"EMAIL DEBUG - USER: {os.environ.get('EMAIL_USER','NOT SET')} PASS_LEN: {len(os.environ.get('EMAIL_PASS',''))}")
     """Send two emails:
        1. To Vishal  — full details of the new inquiry
        2. To sender  — auto-reply confirmation
@@ -92,19 +93,18 @@ Message:
 -- Reply: mailto:{email}
 """
 
-    msg1 = EmailMultiAlternatives(
-        subject=owner_subject,
-        body=owner_text,
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        to=[settings.OWNER_EMAIL],
-        reply_to=[email],
-    )
-    msg1.attach_alternative(owner_html, "text/html")
     try:
-        msg1.send(fail_silently=False)
-        print("EMAIL DEBUG - msg1 (to owner) sent OK")
+        resend.Emails.send({
+            "from": "Vishal Yadav Portfolio <onboarding@resend.dev>",
+            "to": [settings.OWNER_EMAIL],
+            "reply_to": email,
+            "subject": owner_subject,
+            "html": owner_html,
+            "text": owner_text,
+        })
+        print("RESEND - msg1 (to owner) sent OK")
     except Exception as e:
-        print(f"EMAIL DEBUG - msg1 FAILED: {e}")
+        print(f"RESEND - msg1 FAILED: {e}")
 
     # ── 2. Auto-reply email TO SENDER ────────────────────────
     reply_subject = f"Thank you for visiting my portfolio, {name.split()[0]}!"
@@ -195,19 +195,18 @@ Vishal Yadav
 Full Stack Developer & AI Engineer
 """
 
-    msg2 = EmailMultiAlternatives(
-        subject=reply_subject,
-        body=reply_text,
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        to=[email],
-        reply_to=[settings.OWNER_EMAIL],
-    )
-    msg2.attach_alternative(reply_html, "text/html")
     try:
-        msg2.send(fail_silently=False)
-        print("EMAIL DEBUG - msg2 (auto-reply) sent OK")
+        resend.Emails.send({
+            "from": "Vishal Yadav Portfolio <onboarding@resend.dev>",
+            "to": [email],
+            "reply_to": settings.OWNER_EMAIL,
+            "subject": reply_subject,
+            "html": reply_html,
+            "text": reply_text,
+        })
+        print("RESEND - msg2 (auto-reply) sent OK")
     except Exception as e:
-        print(f"EMAIL DEBUG - msg2 FAILED: {e}")
+        print(f"RESEND - msg2 FAILED: {e}")
 
 
 def home(request):
