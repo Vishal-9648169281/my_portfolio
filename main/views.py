@@ -100,7 +100,7 @@ Message:
     msg1.send(fail_silently=True)
 
     # ── 2. Auto-reply email TO SENDER ────────────────────────
-    reply_subject = f"Thanks for reaching out, {name.split()[0]}!"
+    reply_subject = f"Thank you for visiting my portfolio, {name.split()[0]}!"
 
     reply_html = f"""
 <!DOCTYPE html>
@@ -130,15 +130,15 @@ Message:
 <div class="wrap">
   <div class="header">
     <div class="avatar">VY</div>
-    <h1>Message Received!</h1>
-    <p>I'll get back to you within 24 hours</p>
+    <h1>Thank You for Visiting!</h1>
+    <p>I will respond to you as soon as possible</p>
   </div>
   <div class="body">
     <p>Hi <strong style="color:#a78bfa">{name.split()[0]}</strong>,</p>
-    <p>Thank you for reaching out through my portfolio! I've received your message and will get back to you as soon as possible — usually within <strong style="color:#22d3ee">24 hours</strong>.</p>
+    <p>Thank you for visiting my portfolio and reaching out! I have received your message and I will <strong style="color:#22d3ee">respond as soon as possible</strong>.</p>
 
     <div class="highlight">
-      Your message has been saved and I've been notified instantly. Looking forward to connecting!
+      Your message has been safely received. I appreciate you taking the time to contact me and I look forward to connecting with you!
     </div>
 
     <p style="color:#9896b8; font-size:13px;">Here's a summary of what you sent:</p>
@@ -172,7 +172,8 @@ Message:
     reply_text = f"""
 Hi {name.split()[0]},
 
-Thank you for reaching out! I've received your message and will get back to you within 24 hours.
+Thank you for visiting my portfolio and reaching out!
+I have received your message and will respond as soon as possible.
 
 Your message summary:
 Subject : {subject}
@@ -192,9 +193,10 @@ Full Stack Developer & AI Engineer
         body=reply_text,
         from_email=settings.DEFAULT_FROM_EMAIL,
         to=[email],
+        reply_to=[settings.OWNER_EMAIL],
     )
     msg2.attach_alternative(reply_html, "text/html")
-    msg2.send(fail_silently=True)
+    msg2.send(fail_silently=False)
 
 
 def home(request):
