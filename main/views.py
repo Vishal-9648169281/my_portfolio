@@ -8,6 +8,8 @@ import threading
 
 
 def send_contact_email(name, email, subject, message):
+    import os
+    print(f"EMAIL DEBUG - USER: {os.environ.get('EMAIL_USER','NOT SET')} PASS_LEN: {len(os.environ.get('EMAIL_PASS',''))}")
     """Send two emails:
        1. To Vishal  — full details of the new inquiry
        2. To sender  — auto-reply confirmation
@@ -98,7 +100,11 @@ Message:
         reply_to=[email],
     )
     msg1.attach_alternative(owner_html, "text/html")
-    msg1.send(fail_silently=True)
+    try:
+        msg1.send(fail_silently=False)
+        print("EMAIL DEBUG - msg1 (to owner) sent OK")
+    except Exception as e:
+        print(f"EMAIL DEBUG - msg1 FAILED: {e}")
 
     # ── 2. Auto-reply email TO SENDER ────────────────────────
     reply_subject = f"Thank you for visiting my portfolio, {name.split()[0]}!"
@@ -197,7 +203,11 @@ Full Stack Developer & AI Engineer
         reply_to=[settings.OWNER_EMAIL],
     )
     msg2.attach_alternative(reply_html, "text/html")
-    msg2.send(fail_silently=True)
+    try:
+        msg2.send(fail_silently=False)
+        print("EMAIL DEBUG - msg2 (auto-reply) sent OK")
+    except Exception as e:
+        print(f"EMAIL DEBUG - msg2 FAILED: {e}")
 
 
 def home(request):
