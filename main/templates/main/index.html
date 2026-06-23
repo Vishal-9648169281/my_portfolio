@@ -210,7 +210,7 @@ tailwind.config = {
           {% if profile and profile.profile_image %}
             <img src="{{ profile.profile_image.url }}" alt="Vishal Yadav" class="w-full h-full object-cover">
           {% else %}
-            <div class="w-full h-full flex items-center justify-center font-display font-black text-7xl g-text">VY</div>
+            <img src="{% static 'main/images/vishal.jpeg' %}" alt="Vishal Yadav" class="w-full h-full object-cover">
           {% endif %}
         </div>
         <!-- Floating tech badges -->
