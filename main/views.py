@@ -4,6 +4,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.utils import timezone
 from .models import Profile, Skill, Project, Experience, Education, Contact
+import threading
 
 
 def send_contact_email(name, email, subject, message):
@@ -196,7 +197,7 @@ Full Stack Developer & AI Engineer
         reply_to=[settings.OWNER_EMAIL],
     )
     msg2.attach_alternative(reply_html, "text/html")
-    msg2.send(fail_silently=False)
+    msg2.send(fail_silently=True)
 
 
 def home(request):
@@ -225,11 +226,9 @@ def home(request):
                 name=name, email=email,
                 subject=subject, message=message
             )
-            # Send emails
-            try:
-                send_contact_email(name, email, subject, message)
-            except Exception:
-                pass  # DB save succeeded; email failure is silent
+            # Send emails in background so form response is instant
+            t = threading.Thread(target=send_contact_email, args=(name, email, subject, message), daemon=True)
+            t.start()
             messages.success(request, f'Message sent! I will reply to {email} within 24 hours.')
         else:
             messages.error(request, 'Please fill all the fields.')
