@@ -227,7 +227,7 @@ def home(request):
                 subject=subject, message=message
             )
             # Send emails in background so form response is instant
-            t = threading.Thread(target=send_contact_email, args=(name, email, subject, message), daemon=True)
+            t = threading.Thread(target=send_contact_email, args=(name, email, subject, message), daemon=False)
             t.start()
             messages.success(request, f'Message sent! I will reply to {email} within 24 hours.')
         else:
