@@ -1,5 +1,9 @@
 # Vishal Yadav — Portfolio
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Portfolio-7c3aed?style=for-the-badge&logo=render)](https://vishal-portfolio-mezw.onrender.com)
+
+**Live:** [https://vishal-portfolio-mezw.onrender.com](https://vishal-portfolio-mezw.onrender.com)
+
 A modern, responsive portfolio website built with **Django** + **Tailwind CSS**.
 
 ## Features
